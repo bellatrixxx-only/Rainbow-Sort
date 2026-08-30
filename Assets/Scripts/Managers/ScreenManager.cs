@@ -76,14 +76,20 @@ private void SetActiveScreen(GameObject screen)
         screen.SetActive(true);
     }
 }
-
     public void ShowPause()
-    { 
+    {
         if (_pausePanel != null)
         {
             _pausePanel.SetActive(true);
         }
-        Time.timeScale = 0f;
+    }
+
+    public void HidePause()
+    {
+        if (_pausePanel != null)
+        {
+            _pausePanel.SetActive(false);
+        }
     }
 
     public void ResumeGame()

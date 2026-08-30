@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     public int Multiplier => _multiplier;
     public int Lives => _lives;
     public int CurrentFlaskCount => _currentFlaskCount;
+
     public float CurrentFallSpeed
     {
         get
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
             return _balance.initialFallSpeed + extraFlasks * _balance.speedIncreasePerFlask;
         }
     }
+
     public float CurrentSpawnInterval
     {
         get
@@ -49,7 +52,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
+        _state = GameState.Menu;
     }
 
     private void Start()
@@ -61,9 +66,27 @@ public class GameManager : MonoBehaviour
             _gameUI.HideGameOver();
         }
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_state == GameState.Playing)
+            {
+                PauseGame();
+            }
+            else if (_state == GameState.Paused)
+            {
+                ResumeGame();
+            }
+        }
+    }
+
     public void StartGame()
     {
         _state = GameState.Playing;
+        Time.timeScale = 1f;
+
         _score = 0;
         _multiplier = 1;
         _lives = _balance.livesCount;
@@ -79,6 +102,7 @@ public class GameManager : MonoBehaviour
 
         RefreshUI();
     }
+
     public void RestartGame()
     {
         if (ScreenManager.Instance != null)
@@ -90,6 +114,49 @@ public class GameManager : MonoBehaviour
             StartGame();
         }
     }
+
+    public void PauseGame()
+    {
+        if (_state != GameState.Playing)
+        {
+            return;
+        }
+
+        _state = GameState.Paused;
+        Time.timeScale = 0f;
+
+        if (ScreenManager.Instance != null)
+        {
+            ScreenManager.Instance.ShowPause();
+        }
+    }
+
+    public void ResumeGame()
+    {
+        if (_state != GameState.Paused)
+        {
+            return;
+        }
+
+        _state = GameState.Playing;
+        Time.timeScale = 1f;
+
+        if (ScreenManager.Instance != null)
+        {
+            ScreenManager.Instance.HidePause();
+        }
+    }
+
+    public void ToMenu()
+    {
+        _state = GameState.Menu;
+
+        if (ScreenManager.Instance != null)
+        {
+            ScreenManager.Instance.ShowMainMenu();
+        }
+    }
+
     public void OnFlaskClicked(Flask flask)
     {
         if (_state != GameState.Playing || _ballSpawner.ActiveBall == null)
@@ -113,6 +180,7 @@ public class GameManager : MonoBehaviour
             LoseLife();
         }
     }
+
     public void OnBallReachedFailLine(Ball ball)
     {
         if (_state != GameState.Playing || ball == null || !ball.IsActive)
@@ -124,6 +192,7 @@ public class GameManager : MonoBehaviour
         LoseLife();
         _ballSpawner.ScheduleNextBall();
     }
+
     public FlaskColor GetRandomAvailableBallColor()
     {
         List<FlaskColor> colors = _flaskManager.GetAvailableColors();
@@ -135,6 +204,7 @@ public class GameManager : MonoBehaviour
 
         return colors[Random.Range(0, colors.Count)];
     }
+
     public Sprite GetBallSprite(FlaskColor color)
     {
         foreach (ColorSpritePair pair in _colorSprites)
@@ -147,6 +217,7 @@ public class GameManager : MonoBehaviour
 
         return null;
     }
+
     private void CatchBallInFlask(Ball ball, Flask flask)
     {
         Sprite ballSprite = GetBallSprite(ball.Color);
@@ -160,6 +231,7 @@ public class GameManager : MonoBehaviour
             _ballSpawner.ScheduleNextBall();
         });
     }
+
     private void OnFlaskFilled(Flask flask)
     {
         AddScore(_balance.pointsPerFlask * _multiplier);
@@ -170,6 +242,7 @@ public class GameManager : MonoBehaviour
 
         RefreshUI();
     }
+
     private void LoseLife()
     {
         if (_state != GameState.Playing)
@@ -187,6 +260,7 @@ public class GameManager : MonoBehaviour
             TriggerGameOver();
         }
     }
+
     private void TriggerGameOver()
     {
         _state = GameState.GameOver;
@@ -197,7 +271,9 @@ public class GameManager : MonoBehaviour
         }
 
         _ballSpawner.ResetSpawner();
+
         bool isNewRecord = false;
+
         if (SaveManager.Instance != null)
         {
             int previousBest = SaveManager.Instance.BestScore;
@@ -206,6 +282,7 @@ public class GameManager : MonoBehaviour
 
             isNewRecord = _score > previousBest && _score > 0;
         }
+
         int bestScore = SaveManager.Instance != null ? SaveManager.Instance.BestScore : 0;
         _gameUI.ShowGameOver(_score, bestScore, isNewRecord);
     }
