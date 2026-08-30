@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e46067467145b94c95d2bb80af1a2bb, type: 3}
+  m_Name: Drawing_c3_d6
+  m_EditorClassIdentifier: Assembly-CSharp::DrawingData
+  drawingName: "\u0420\u0438\u0441\u0443\u043D\u043E\u043A 3-6"
+  drawingId: c3_d6
+  unlockCost: 55
+  elementCount: 7
+  rewardBonus: 0
+  rewardBonusCount: 1
