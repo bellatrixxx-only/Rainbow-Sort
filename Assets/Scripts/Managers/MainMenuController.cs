@@ -2,15 +2,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Контроллер главного меню. Обрабатывает нажатия кнопок, обновляет отображение данных и настроек.
+/// </summary>
 public class MainMenuController : MonoBehaviour
 {
     [Header("Лучший счет")]
     [SerializeField] private TMPro.TextMeshProUGUI _bestScoreText;
 
-    [Header("Кнопки настроек")]
-    [SerializeField] private TMPro.TextMeshProUGUI _languageButtonText;
-    [SerializeField] private TMPro.TextMeshProUGUI _musicButtonText;
-    [SerializeField] private TMPro.TextMeshProUGUI _soundButtonText;
+    [Header("Язык")]
+    [SerializeField] private TMPro.TextMeshProUGUI _languageTextValue;
+
+    [Header("Тумблеры")]
+    [SerializeField] private Slider _musicToggle;
+    [SerializeField] private Image _musicToggleBg;
+    [SerializeField] private Slider _soundToggle;
+    [SerializeField] private Image _soundToggleBg;
 
     private void OnEnable()
     {
@@ -38,11 +45,6 @@ public class MainMenuController : MonoBehaviour
         {
             ScreenManager.Instance.ShowAlbum();
         }
-    }
-
-    public void OnLeaderboardClicked()
-    {
-        Debug.Log("Лидерборд - в разработке");
     }
 
     public void OnLanguageClicked()
@@ -86,25 +88,27 @@ public class MainMenuController : MonoBehaviour
             return;
         }
 
-        if (_languageButtonText != null)
+        if (_languageTextValue != null)
         {
-            _languageButtonText.text = SaveManager.Instance.Language == "ru"
-                ? "ЯЗЫК\nRU"
-                : "ЯЗЫК\nEN";
+            _languageTextValue.text = SaveManager.Instance.Language == "ru" ? "РУС" : "ENG";
         }
 
-        if (_musicButtonText != null)
+        SetToggle(_musicToggle, _musicToggleBg, SaveManager.Instance.MusicEnabled);
+        SetToggle(_soundToggle, _soundToggleBg, SaveManager.Instance.SoundEnabled);
+    }
+
+    private void SetToggle(Slider slider, Image background, bool isOn)
+    {
+        if (slider != null)
         {
-            _musicButtonText.text = SaveManager.Instance.MusicEnabled
-                ? "МУЗЫКА\nВКЛ"
-                : "МУЗЫКА\nВЫКЛ";
+            slider.value = isOn ? 1f : 0f;
         }
 
-        if (_soundButtonText != null)
+        if (background != null)
         {
-            _soundButtonText.text = SaveManager.Instance.SoundEnabled
-                ? "ЗВУК\nВКЛ"
-                : "ЗВУК\nВЫКЛ";
+            background.color = isOn
+                ? new Color(0.45f, 0.85f, 0.45f)
+                : new Color(0.9f, 0.35f, 0.35f);
         }
     }
 
