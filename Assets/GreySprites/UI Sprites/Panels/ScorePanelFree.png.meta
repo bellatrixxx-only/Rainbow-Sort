@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d642b5eb4acee20479c60f9fa1f06e0e
+guid: 50736d8d38a0c8e44a90fa083a6606a2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1608726795387286314
-    second: ChoiceLanguagePanel_0
+      213: -5526136248318803347
+    second: ScorePanelFree_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ChoiceLanguagePanel_0
+      name: ScorePanelFree_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 709
-        height: 813
+        width: 265
+        height: 168
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2336bb3f78535610800000000000000
-      internalID: 1608726795387286314
+      spriteID: d624c826c583f43b0800000000000000
+      internalID: -5526136248318803347
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ChoiceLanguagePanel_0: 1608726795387286314
+      ScorePanelFree_0: -5526136248318803347
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d642b5eb4acee20479c60f9fa1f06e0e
+guid: 5ce6206bfde8d3b4facf39ba732bf8db
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1608726795387286314
-    second: ChoiceLanguagePanel_0
+      213: -7134224125491679639
+    second: Heart2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -53,7 +53,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ChoiceLanguagePanel_0
+      name: Heart2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 709
-        height: 813
+        width: 84
+        height: 73
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2336bb3f78535610800000000000000
-      internalID: 1608726795387286314
+      spriteID: 96eeb04e4f42efc90800000000000000
+      internalID: -7134224125491679639
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ChoiceLanguagePanel_0: 1608726795387286314
+      Heart2_0: -7134224125491679639
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

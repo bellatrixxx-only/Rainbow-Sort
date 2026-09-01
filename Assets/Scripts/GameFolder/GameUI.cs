@@ -1,93 +1,83 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// Контроллер HUD и экрана Game Over.
+/// Текст — TMP, жизни — через HealthManager, Game Over — два варианта блоков.
+/// </summary>
 public class GameUI : MonoBehaviour
 {
-    [Header("Игровой HUD")]
-    [SerializeField] private Text _scoreText;
-    [SerializeField] private Text _multiplierText;
-    [SerializeField] private Text _livesText;
+    [Header("HUD")]
+    [SerializeField] private TextMeshProUGUI _scoreValueText;
+    [SerializeField] private TextMeshProUGUI _comboValueText;
+    [SerializeField] private HealthManager _healthManager;
 
-    [Header("Game Over")]
+    [Header("Game Over: обычный вариант")]
     [SerializeField] private GameObject _gameOverPanel;
-    [SerializeField] private Text _finalScoreText;
-    [SerializeField] private Text _bestScoreText;
-    [SerializeField] private Text _newRecordText;
-    [SerializeField] private Button _restartButton;
+    [SerializeField] private GameObject _blockDefault;
+    [SerializeField] private TextMeshProUGUI _currentScoreText;
+    [SerializeField] private TextMeshProUGUI _bestScoreText;
+
+    [Header("Game Over: рекорд")]
+    [SerializeField] private GameObject _blockRecord;
+    [SerializeField] private TextMeshProUGUI _recordScoreText;
 
     private void Awake()
     {
-        if (_restartButton != null)
-        {
-            _restartButton.onClick.AddListener(OnRestartClicked);
-        }
-
         HideGameOver();
     }
+
     public void UpdateScore(int score)
     {
-        if (_scoreText != null)
+        if (_scoreValueText != null)
         {
-            _scoreText.text = $"Score: {score}";
+            _scoreValueText.text = score.ToString();
         }
     }
+
     public void UpdateMultiplier(int multiplier)
     {
-        if (_multiplierText != null)
+        if (_comboValueText != null)
         {
-            _multiplierText.text = $"x{multiplier}";
+            _comboValueText.text = "x" + multiplier;
         }
     }
+
     public void UpdateLives(int lives)
     {
-        if (_livesText != null)
+        if (_healthManager != null)
         {
-            _livesText.text = $"Lives: {lives}";
+            _healthManager.UpdateHearts(lives);
         }
     }
+
     public void ShowGameOver(int finalScore, int bestScore, bool isNewRecord)
     {
-        if (_gameOverPanel != null)
+        if (_blockDefault != null)
         {
-            _gameOverPanel.SetActive(true);
+            _blockDefault.SetActive(!isNewRecord);
         }
 
-        if (isNewRecord)
+        if (_blockRecord != null)
         {
-            if (_finalScoreText != null)
+            _blockRecord.SetActive(isNewRecord);
+        }
+
+        if (!isNewRecord)
+        {
+            if (_currentScoreText != null)
             {
-                _finalScoreText.gameObject.SetActive(false);
+                _currentScoreText.text = finalScore.ToString();
             }
 
             if (_bestScoreText != null)
             {
-                _bestScoreText.gameObject.SetActive(false);
-            }
-
-            if (_newRecordText != null)
-            {
-                _newRecordText.gameObject.SetActive(true);
-                _newRecordText.text = $"НОВЫЙ РЕКОРД: {finalScore}";
+                _bestScoreText.text = bestScore.ToString();
             }
         }
-        else
+        else if (_recordScoreText != null)
         {
-            if (_finalScoreText != null)
-            {
-                _finalScoreText.gameObject.SetActive(true);
-                _finalScoreText.text = $"Final Score: {finalScore}";
-            }
-
-            if (_bestScoreText != null)
-            {
-                _bestScoreText.gameObject.SetActive(true);
-                _bestScoreText.text = $"Лучший: {bestScore}";
-            }
-
-            if (_newRecordText != null)
-            {
-                _newRecordText.gameObject.SetActive(false);
-            }
+            _recordScoreText.text = finalScore.ToString();
         }
 
         if (ScreenManager.Instance != null)
@@ -109,6 +99,14 @@ public class GameUI : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.RestartGame();
+        }
+    }
+
+    public void OnMenuClicked()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ToMenu();
         }
     }
 }
