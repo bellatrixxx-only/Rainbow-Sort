@@ -18,6 +18,30 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Image _musicToggleBg;
     [SerializeField] private Slider _soundToggle;
     [SerializeField] private Image _soundToggleBg;
+    [SerializeField] private LanguagePopupController _languagePopupController;
+
+    public void OnLanguageClicked()
+    {
+        if (_languagePopupController != null)
+        {
+            _languagePopupController.Open();
+            return;
+        }
+
+        if (SaveManager.Instance == null)
+        {
+            return;
+        }
+
+        string newLanguage = SaveManager.Instance.Language == "ru" ? "en" : "ru";
+        SaveManager.Instance.SaveLanguage(newLanguage);
+        UpdateSettingsDisplay();
+    }
+
+    public void RefreshSettings()
+    {
+        UpdateSettingsDisplay();
+    }
 
     private void OnEnable()
     {
@@ -45,18 +69,6 @@ public class MainMenuController : MonoBehaviour
         {
             ScreenManager.Instance.ShowAlbum();
         }
-    }
-
-    public void OnLanguageClicked()
-    {
-        if (SaveManager.Instance == null)
-        {
-            return;
-        }
-
-        string newLanguage = SaveManager.Instance.Language == "ru" ? "en" : "ru";
-        SaveManager.Instance.SaveLanguage(newLanguage);
-        UpdateSettingsDisplay();
     }
 
     public void OnMusicClicked()
