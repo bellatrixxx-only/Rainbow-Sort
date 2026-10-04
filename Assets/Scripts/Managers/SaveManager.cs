@@ -2,6 +2,15 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
+    [ContextMenu("Сброс рекорда")]
+    private void ResetBestScore()
+    {
+        BestScore = 0;
+        PlayerPrefs.SetInt(KEY_BEST_SCORE, 0);
+        PlayerPrefs.Save();
+
+        Debug.Log("Рекорд сброшен до 0.");
+    }
     public static SaveManager Instance { get; private set; }
 
     private const string KEY_BEST_SCORE = "BestScore";

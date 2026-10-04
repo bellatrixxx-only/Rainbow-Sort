@@ -151,6 +151,13 @@ public class GameManager : MonoBehaviour
     {
         _state = GameState.Menu;
 
+        if (_ballSpawner != null)
+        {
+            _ballSpawner.ResetSpawner();
+        }
+
+        Time.timeScale = 0f;
+
         if (ScreenManager.Instance != null)
         {
             ScreenManager.Instance.ShowMainMenu();
@@ -190,7 +197,11 @@ public class GameManager : MonoBehaviour
 
         ball.ReturnToPool();
         LoseLife();
-        _ballSpawner.ScheduleNextBall();
+
+        if (_state == GameState.Playing)
+        {
+            _ballSpawner.ScheduleNextBall();
+        }
     }
 
     public FlaskColor GetRandomAvailableBallColor()
